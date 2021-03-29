@@ -1,0 +1,49 @@
+version: '3'
+services:
+  db:
+    image: mysql:8.0.23
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - ./mysql:/var/lib/mysql
+    command: ["--default-authentication-plugin=mysql_native_password"]
+    ports:
+      - 3306:3306
+  app:
+    build: app
+    volumes:
+      - ./app:/usr/src/app
+    command: ["rails", "server", "-b", "0.0.0.0"]
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+
+# version: '3'
+# services:
+#   db:
+#     image: mysql:8.0.23
+#     ports:
+#       - $MYSQL_PORT:3306
+#     environment:
+#       MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+#       MYSQL_USER: $MYSQL_USER
+#       MYSQL_PASSWORD: $MYSQL_PASSWORD
+#       MYSQL_DATABASE: $MYSQL_DATABASE
+#     volumes:
+#       - ./docker/db/data:/var/lib/mysql
+#       - ./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf
+#     command: ["--default-authentication-plugin=mysql_native_password"]
+#   app:
+#     build:
+#       context: ./
+#       dockerfile: ./docker/app/Dockerfile
+#     volumes:
+#       - ./app:/usr/src/app
+#     command: ["rails", "server", "-b", "0.0.0.0"]
+#     ports:
+#       - $PORT:3000
+#     depends_on:
+#       - db
+#     tty: true
+#     stdin_open: true
