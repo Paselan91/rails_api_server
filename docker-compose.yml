@@ -10,14 +10,23 @@ services:
     ports:
       - 3306:3306
   app:
-    build: src
+    build:
+      context: ./
+      dockerfile: ./docker/app/Dockerfile
+    container_name: "rails_api"
+    depends_on:
+      - db
+    environment:
+      - ENV_MODE=dev
+      - MYSQL_CONTAINER_NAME=buzziee_mysql
+    ports:
+      - 3000:3000
+    # ports:
+    #   - $PORT:3000
     volumes:
       - ./src:/usr/src/app
     command: ["rails", "server", "-b", "0.0.0.0"]
-    ports:
-      - 3000:3000
-    depends_on:
-      - db
+    tty: true
 
 # version: '3'
 # services:
