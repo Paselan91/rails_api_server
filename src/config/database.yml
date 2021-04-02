@@ -9,13 +9,15 @@
 # And be sure to use new-style password hashing:
 #   https://dev.mysql.com/doc/refman/5.7/en/password-hashing.html
 #
+
 default: &default
   adapter: mysql2
   encoding: utf8mb4
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  # FIXME: usernameとpasswordは.envから取得するように修正する
   username: root
-  password: password
-  host: db
+  password: test
+  host: mysql
 
 development:
   <<: *default

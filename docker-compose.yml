@@ -1,24 +1,28 @@
 version: '3'
 services:
-  db:
+  mysql:
     image: mysql:8.0.23
-    environment:
-      MYSQL_ROOT_PASSWORD: password
     volumes:
-      - ./mysql:/var/lib/mysql
+      - ./docker/db/data:/var/lib/mysql
+      - ./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf
     command: ["--default-authentication-plugin=mysql_native_password"]
     ports:
-      - 3306:3306
+      - $MYSQL_PORT:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+      MYSQL_USER: $MYSQL_USER
+      MYSQL_PASSWORD: $MYSQL_PASSWORD
+      MYSQL_DATABASE: rails_api_mysql
   app:
+    container_name: "rails_api"
     build:
       context: ./
       dockerfile: ./docker/app/Dockerfile
-    container_name: "rails_api"
     depends_on:
-      - db
+      - mysql
     environment:
       - ENV_MODE=dev
-      - MYSQL_CONTAINER_NAME=buzziee_mysql
+      - MYSQL_CONTAINER_NAME=rails_api_mysql
     ports:
       - $PORT:3000
     volumes:
