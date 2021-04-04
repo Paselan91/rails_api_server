@@ -1,6 +1,7 @@
 ## Rails API Server
 
-build & up application
+#### Prepare
+build & up app
 ```bash
 $ make up
 ```
@@ -10,14 +11,14 @@ migrate
 $ make migrate
 ```
 
-migrate
+seed
 ```bash
 $ make seed
 ```
 
 Health Check
 ```bash
-curl http://localhost:3000/users/index
+$ curl http://localhost:3000/users/index
 [{"id":1,"name":"Pythagoras","created_at":"2021-04-02T11:27:12.968Z","updated_at":"2021-04-02T11:27:12.968Z"}]
 ```
 
