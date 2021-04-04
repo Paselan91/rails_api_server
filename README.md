@@ -1,34 +1,43 @@
 ## Rails API Server
 
-#### Prepare
-build & up app
+#### コンテナの立ち上げ、停止
 ```bash
 $ make up
 ```
 
-migrate
+```bash
+$ make stop
+```
+
+#### migration/seed
 ```bash
 $ make migrate
 ```
-
-seed
 ```bash
 $ make seed
 ```
 
-Health Check
+#### ヘルスチェック
 ```bash
 $ curl http://localhost:3000/users/index
 [{"id":1,"name":"Pythagoras","created_at":"2021-04-02T11:27:12.968Z","updated_at":"2021-04-02T11:27:12.968Z"}]
 ```
 
-#### Others
-attach app container
+#### トラブルシューティング
+docker-compose up に失敗する場合は下記コマンドを実行し、再度 docker-compose up
+```bash
+$ rm tmp/pids/server.pid
+```
+Ctl + cでdockerを強制終了したことにより、pidファイルが残っているため（らしい）
+
+
+#### コンテナへの接続
+appコンテナ
 ```bash
 $ make attach app
 ```
 
-attach DB(mysql) container
+DB(mysql)コンテナ
 ```bash
 $ make attach db
 ```
